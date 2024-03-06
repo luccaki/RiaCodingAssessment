@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using RiaMoneyTransfer.ApplicationCore.Helpers;
 using RiaMoneyTransfer.ApplicationCore.Interfaces.Infrastructure;
 using RiaMoneyTransfer.ApplicationCore.Interfaces.Services;
 using RiaMoneyTransfer.ApplicationCore.Services;
@@ -31,6 +32,8 @@ builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
+
+Config.ConnectionString = app.Configuration.GetConnectionString("DataBaseConnection") ?? throw new ArgumentNullException("Couldn't get DataBase Connection String!");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

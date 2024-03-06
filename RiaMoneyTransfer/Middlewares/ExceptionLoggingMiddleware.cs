@@ -1,4 +1,6 @@
-﻿namespace RiaMoneyTransfer.Presentation.Middlewares
+﻿using RiaMoneyTransfer.ApplicationCore.Exceptions;
+
+namespace RiaMoneyTransfer.Presentation.Middlewares
 {
     public class ExceptionLoggingMiddleware(RequestDelegate next, ILogger<ExceptionLoggingMiddleware> logger)
     {
@@ -14,7 +16,8 @@
             catch (Exception ex)
             {
                 _logger.LogError($"An unhandled exception occurred: {ex}");
-                throw;
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.Response.WriteAsJsonAsync(new ExceptionResponse() { Message = ex.Message, StatusCode = context.Response.StatusCode });
             }
         }
     }

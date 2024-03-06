@@ -4,7 +4,7 @@ namespace RiaMoneyTransfer.ApplicationCore.Interfaces.Services
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<CustomerDto>> GetAsync();
-        Task<int> PostAsync(IEnumerable<CustomerDto> customers);
+        Task<CustomerDto[]> GetAsync();
+        Task<CustomerResponseDto> PostAsync(IEnumerable<CustomerDto> customers);
     }
 }

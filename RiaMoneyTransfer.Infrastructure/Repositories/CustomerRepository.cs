@@ -1,24 +1,30 @@
-﻿using RiaMoneyTransfer.ApplicationCore.Entities;
+﻿using Newtonsoft.Json;
+using RiaMoneyTransfer.ApplicationCore.Entities;
+using RiaMoneyTransfer.ApplicationCore.Helpers;
 using RiaMoneyTransfer.ApplicationCore.Interfaces.Infrastructure;
 
 namespace RiaMoneyTransfer.Infrastructure.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public async Task<IEnumerable<Customer>> GetAsync()
+        public async Task<Customer[]> GetAsync()
         {
-            return new List<Customer>()
-            {
-                new() { Id = 1, FirstName = "Lucca", LastName = "Ianaguivara", Age = 24},
-                new() { Id = 2, FirstName = "Ianaguivara", LastName = "Lucca", Age = 42}
-            };
+            if (!Path.Exists(Config.ConnectionString))
+                return [];
+
+            var file = await File.ReadAllTextAsync(Config.ConnectionString);
+            var ret = JsonConvert.DeserializeObject<Customer[]>(file);
+
+            if (ret is null)
+                return [];
+
+            return ret;
         }
 
-        public async Task<int> PostAsync(IEnumerable<Customer> customers)
+        public async Task PostAsync(Customer[] customers)
         {
-            if (customers.Count() > 1)
-                throw new ArgumentException("Can't process two customers");
-            return 1;
+            var json = JsonConvert.SerializeObject(customers);
+            await File.WriteAllTextAsync(Config.ConnectionString, json);
         }
     }
 }

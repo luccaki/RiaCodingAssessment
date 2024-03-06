@@ -1,4 +1,4 @@
-﻿namespace RiaMoneyTransfer.ApplicationCore.Dto
+﻿namespace RiaMoneyTransfer.TestSimulator
 {
     public class CustomerDto
     {
