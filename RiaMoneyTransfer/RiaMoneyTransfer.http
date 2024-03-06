@@ -1,0 +1,6 @@
+@RiaMoneyTransfer_HostAddress = http://localhost:5030
+
+GET {{RiaMoneyTransfer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
