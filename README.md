@@ -1,7 +1,11 @@
 
 # Coding Assessemnt for Ria Money Transfer
 
+## Denomination Routine:
+Solution inside RiaMoneyTransfer.ATM folder
+
 ## REST Server:
+Solution inside RiaMoneyTransfer.RESTServer folder
 
 ### GET api/v1/customer
 
